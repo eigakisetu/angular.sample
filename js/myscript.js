@@ -1,7 +1,5 @@
 var mainCtrl = function($scope){
 
-	$scope.demo = {hoge:'デモ'}
-
 	$scope.user = {lastName: '', firstName: '',gender: '',age: ''};
 	$scope.address = {zip: '', pref:'',add1: '', add2: ''};
 	$scope.email = {email:''}
