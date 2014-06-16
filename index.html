@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+<meta charset="utf-8">
+<title>TAMプレゼントキャンペーン | 5月</title>
+<meta name="Description" content="" />
+<meta name="Keywords" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--css-->
+<link rel="stylesheet" href="css/reset.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.8/angular.min.js"></script>
+
+ <script src="js/lib/jquery-1.9.1.min.js"></script>
+<script charset="UTF-8" src="https://f.msgs.jp/fcnts/ijz/ajaxzip3-https.js"></script>
+<script src="js/lib/jquery.easing.1.3.js"></script>
+<script src="js/lib/jquery.customSelect.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/myscript.js"></script>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+</head>
+<!--
+<body ng-controller="mainCtrl">
+-->
+<body>
+<!--ヘッダー-->
+<header>
+<div class="row">
+	<div id="headerLeft">
+		<p id="loginName">ようこそ<span>TAM</span>さん</p>
+		<p id="social"><span>Facebook</span>でログイン中</p>
+		<p id="smp_menu"><img src="img/icon_menu.jpg" height="20" width="26" alt="menu" /></p>
+	</div>
+	<ul>
+		<li><a href="">応募履歴</a></li>
+		<li><a href="">登録情報変更</a></li>
+		<li><a href="">ログアウト</a></li>
+	</ul>
+<!--row--></div>
+</header>
+
+<div id="visual">
+<div class="row">
+<h1>
+<img src="img/main_pc.jpg" alt="TAMグッズが毎回当たる プレゼントキャンペーン" class="imgChange" />
+</h1>
+<!--row--></div>
+<!--visual--></div>
+
+
+<!--メインコンテンツ-->
+<div id="container">
+<div class="row">
+
+<ul id="step" class="cx">
+	<li class="current"><span>入力画面</span></li>
+	<li class="nextStep01"><span>確認画面</span></li>
+	<li><span>完了画面</span></li>
+</ul>
+
+<section>
+<h2>アンケートに答えてください</h2>
+
+<div ng-controller="mainCtrl">
+	<p><input ng-model="demo.hoge"/></p>
+	<p>{{demo.hoge}}</p>
+</div>
+
+<form novalidate name="myForm" action="complete.html">
+
+	<section class="inputBlock">
+		<h3>お名前<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+		<ul class="nameBox">
+			<li class="lastName">姓
+
+				<input name="lastName" type="text" value='' class="name" ng-model="user.lastName" ng-model-options="{ updateOn: 'blur' }" required ng-maxlength="40" ng-pattern="/^[ぁ-んァ-ヶー一-龠A-Z 　\r\n\t]+$/">
+
+				<span class="errorMessage" ng-show="myForm.lastName.$error.required"></span>
+				<span class="errorMessage" ng-show="myForm.lastName.$error.maxlength">40文字以内にしてください</span>
+				<span class="errorMessage" ng-show="myForm.lastName.$error.pattern">全角で入力してください</span>
+			</li>
+
+			<li class="firstName">名
+				<input name="firstName" type="text" value='' class="name" ng-model="user.firstName" ng-model-options="{ updateOn: 'blur' }" required ng-maxlength="40" ng-pattern="/^[ぁ-んァ-ヶー一-龠A-Z 　\r\n\t]+$/">
+				<span class="errorMessage" ng-show="myForm.firstName.$error.required"></span>
+				<span class="errorMessage" ng-show="myForm.firstName.$error.maxlength">40文字以内にしてください</span>
+				<span class="errorMessage" ng-show="myForm.firstName.$error.pattern">全角で入力してください</span>
+			</li>
+		</ul>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock gender">
+		<h3>性別</h3>
+		<ul>
+			<li><input type="radio" name="gender" ng-model="user.gender" id="man" value="男"><label onClick="" for="man">男性</label></li>
+			<li><input type="radio" ng-model="user.gender" name="gender" id="woman" value="女"><label onClick="" for="woman">女性</label></li>
+	</ul>
+
+	<!--inputBlock--></section>
+
+	<section class="inputBlock age">
+		<h3>年齢</h3>
+		<select ng-model="user.age" ng-options="age for age in ['10代','20代','30代','40代','50代','60代','70代']">
+		</select>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock zip">
+		<h3>郵便番号<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+		<!--<input name="zip" type="text" value='' ng-model="user.zip" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9-]+$/" ng-maxlength="7" ng-keyup="numberChange()" ng-keydown="numberChange()" required>-->
+
+		<input name="zip" type="text" value='' ng-model="address.zip" ng-model-options="{ updateOn: 'blur' }" ng-pattern="/^[0-9０ー９-]+$/" ng-minlength="7" ng-maxlength="7" ng-blur="ajaxzip3Check()" ng-keydown="numberChange()" required>
+
+		<span class="errorMessage" ng-show="myForm.zip.$error.required"></span>
+		<span class="errorMessage" ng-show="myForm.zip.$error.maxlength">7文字で入力してください</span>
+		<span class="errorMessage" ng-show="myForm.zip.$error.minlength">7文字で入力してください</span>
+		<span class="errorMessage" ng-show="myForm.zip.$error.pattern">数字で入力してください</span>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock pref">
+		<h3>都道府県<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+
+		<input name="pref" type="text" ng-blur="addressCheck()" required ng-model="address.pref" ng-model-options="{ updateOn: 'blur' }">
+		<span class="errorMessage" ng-show="myForm.pref.$error.required"></span>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock add1">
+		<h3>市区町村<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+		<input name="add1" type="text" value=''  ng-blur="addressCheck()" required ng-model="address.add1" ng-model-options="{ updateOn: 'blur' }">
+		<span class="errorMessage" ng-show="myForm.add1.$error.required"></span>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock add2">
+		<h3>番地<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+		<input name="add2" type="text" value='' required ng-model="address.add2" ng-model-options="{ updateOn: 'blur' }">
+		<span class="errorMessage" ng-show="myForm.add2.$error.required"></span>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock email">
+		<h3>E-mail<span class="required"><img src="img/require.jpg" height="14" width="32" alt="必須"　/></span></h3>
+		<input name="email" type="email" value='' ng-model="email.email"  ng-model-options="{ updateOn: 'blur' }" required>
+		<span class="errorMessage" ng-show="myForm.email.$error.required"></span>
+		<span class="errorMessage" ng-show="myForm.email.$error.email">正しい形式で入力してください</span>
+	<!--inputBlock--></section>
+
+	<section class="inputBlock info">
+		<h3>TAMからのお知らせメールを受け取りますか</h3>
+		<ul>
+		<li><input type="radio" ng-model="information.mail" name="info" id="infoYes" value="はい"><label onClick="" for="infoYes">はい</label></li>
+		<li><input type="radio" ng-model="information.mail" name="infoNo" id="infoNo" value="いいえ"><label onClick="" for="infoNo">いいえ</label></li>
+		</ul>
+	<!--inputBlock--></section>
+	<div class="submitBlock">
+		<input type="btn" id="btn01" class="btn01" value="確認する" ng-disabled="form.$invalid">
+	</div>
+
+	</section>
+
+<div id="confirm">
+	<div class="row">
+		<ul id="step" class="cx">
+			<li class="nextStep02"><span>入力画面</span></li>
+			<li class="current"><span>確認画面</span></li>
+			<li><span>完了画面</span></li>
+		</ul>
+	</div>
+
+	<h2>送信内容をご確認ください</h2>
+	<section class="inputBlock">
+		<h3>お名前</h3>
+		<ul class="nameBox">
+			<li>{{user.lastName}}</li>
+			<li>{{user.firstName}}</li>
+		</ul>
+	</section>
+
+	<section class="inputBlock">
+		<h3>性別</h3>
+		<p>{{user.gender}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>年齢</h3>
+		<p>{{user.age}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>郵便番号</h3>
+		<p>{{address.zip}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>都道府県</h3>
+		<p>{{address.pref}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>市区町村</h3>
+		<p>{{address.add1}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>番地</h3>
+		<p>{{address.add2}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>E-mail</h3>
+		<p>{{email.email}}</p>
+	</section>
+
+	<section class="inputBlock">
+		<h3>TAMからのお知らせメールを受け取りますか</h3>
+		<p>{{information.mail}}</p>
+	</section>
+
+	<div class="submitBlock">
+		<input type="btn" id="back" class="back" value="戻る">
+		<input type="submit" id="submit" class="submit" value="送信する" ng-disabled="form.$invalid">
+	</div>
+</div>
+<div id="bg"></div>
+</form>
+</section>
+
+<p class="pageScroll"><a href="#wrapper">TOP▲</a></p>
+<!--row--></div>
+
+<!--container--></div>
+
+<footer>
+	<div class="row">
+		<p><small>Copyright © 2014 TAM inc. All Rights Reserved</small></p>
+	</div>
+
+</footer>
+
+
+</body>
+</html>
